@@ -1,0 +1,18 @@
+jobs:
+  run-protocol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt # 确保 Tbb-0304/core 下有这个文件
+      - name: Start Global 6-Node Protocol
+        env:
+          MY_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TARGET_ADDR: ${{ secrets.DESTINATION_ADDRESS }}
+        run: |
+          cd Tbb-0304/core
+          python3 main_act.py --token "$MY_BOT_TOKEN" --target "$TARGET_ADDR" --mode "FORCE_MINT"
