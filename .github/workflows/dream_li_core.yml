@@ -1,0 +1,30 @@
+name: Dream Li AI TON Core
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 * * * *' # 每小时自动运行一次，检查资产状态
+
+jobs:
+  ai_process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Dream Li Code
+        uses: actions/checkout@v4
+
+      - name: Initialize AI Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run AITON Logic
+        env:
+          # 只有在这里引用的秘密，脚本才能读取
+          TON_KEY: ${{ secrets.TON_PRIVATE_KEY }}
+          TRON_KEY: ${{ secrets.TRON_PROD_KEY }}
+          TG_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        run: |
+          echo "Dream Li AI 正在启动..."
+          # 这里以后放置我们编写的 Node.js 钱包逻辑脚本
+          # node src/index.js
